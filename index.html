@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <style>
+         #container {
+        width: 40%;
+        margin: 100px auto;
+        /* max-width: 60rem; */
+        border: 1px solid black;
+       }
+       h3{
+        text-align: center;
+        color: red;
+       }
+    </style>
+    </style>
+</head>
+<body>
+    <div id="container">
+    <h3> Registration Form</h3>
+    <form action="#" method="get" id="myForm" >
+        <label for="">First Name: </label>
+        <input required type="text" id="fname" name="fname">
+        <br>
+        <label for="">Last Name: </label>
+        <input required type="text" id="lname" name="lname">
+        <br>
+        <label for="">Email: </label>
+        <input required type="email" id="email" name="email">
+        <br>
+        <label for="">Gender: </label><br>
+        <input required type="radio" name="gender" value="male" id="Radio"> Male <br>
+        <input required type="radio" name="gender" value="female" id="Radio"> Female <br>
+        <input required type="radio" name="gender" value="others" id="Radio"> Others
+        <br><br>
+        <label for="">Age: </label>
+        <input required min="18" max="60" step="1" type="number" id="age" name="age">
+        <br><br>
+        <label required for="cob">City Of Birth: </label>
+        <select name="cob" id="cob" required>
+            <option value="" selected disabled hidden>Select an Option</option>
+            <option value ="bangalore">Bangalore</option>
+            <option value ="jaipur">Jaipur</option>
+            <option value ="sambalpur">Sambalpur</option>
+            <option value ="mangalore">Mangalore</option>
+            <option value ="patna">Patna</option>
+            <option value ="srinagar">Srinagar</option>
+            <option value ="kanpur">Kanpur</option>
+            <option value ="guwahati">Guwahati</option>
+            <option value ="hassan">Hassan</option>
+            <option value ="ramnagar">Ramnagar</option>
+            <option value ="bidar">Bidar</option>
+            <option value ="tumkur">Tumkur</option>
+        </select>
+        <br><br>
+        <label for="">Select your resume: </label>
+        <input required type="file" name="upload" id="upload" accept="application/pdf,application/docx,application/doc">
+        <br><br>
+        <label for="paf">Position Applying For: </label><br>
+        <input type="checkbox" name="paf" id="paf" value="developer">Developer<br>
+        <input type="checkbox" name="paf" id="paf" value="designer">Designer<br>
+        <input type="checkbox" name="paf" id="paf" value="testing">Testing<br>
+        <input type="checkbox" name="paf" id="paf" value="engineer">Engineer<br>
+        <input type="checkbox" name="paf" id="paf" value="sales support">Sales Support<br>
+        <input type="checkbox" name="paf" id="paf" value="hr">HR
+        <br><br>
+        <label for="">Tentative Joining Date: </label>
+        <input required type ="date" id="tjd" name="tjd"><br><br>
+        
+        <button type = "submit" id="submitButton">Submit</button>
+    </form>
+    </div>
+    <script>
+
+    function isOnline() {
+    return navigator.onLine;
+    }
+
+    function saveFormDataLocally(formData) {
+        localStorage.setItem('offlineFormData', JSON.stringify(formData));
+    }
+    document.getElementById('myForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+    var firstname = document.getElementById('fname').value;
+    var lastname = document.getElementById('lname').value;
+    var email = document.getElementById('email').value;
+    var gender = document.getElementById('Radio').value;
+    var age = document.getElementById('age').value;
+    var cityOfBirth = document.getElementById('cob').value;
+    var resume = document.getElementById('upload').value;
+    var joiningDate = document.getElementById('paf').value;
+
+    var formData = {
+        firstname,lastname,email,age,cityOfBirth,resume,joiningDate
+    };
+    if (isOnline()) {
+        console.log('Form submitted online:', formData);
+    } else {
+        saveFormDataLocally(formData);
+    console.log('Form data saved locally:', formData);
+    }
+
+    document.getElementById('myForm').reset();
+
+});
+
+window.addEventListener('online', function () {
+    const storedData = localStorage.getItem('offlineFormData');
+    if (storedData) {
+        const formData = JSON.parse(storedData);
+        console.log('Submitting stored form data online:', formData);
+        localStorage.removeItem('offlineFormData');
+
+    }
+
+});
+</script>  
+</body>
+</html>
